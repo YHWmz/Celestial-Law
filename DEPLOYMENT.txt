@@ -1,0 +1,16 @@
+Cloudflare Pages 配置（仓库根目录放置 index.html）
+
+Project name: celestial-law
+Production branch: main
+Framework preset: None
+Build command: exit 0
+Build output directory: .
+Root directory (advanced): 留空，使用仓库根目录
+Environment variables: 无需添加
+
+仓库： https://github.com/YHWmz/Celestial-Law
+完成上传后点击 Save and Deploy。
+成功后以 Cloudflare 显示的生产地址为准；当前页面预期 celestial-law.pages.dev。
+本配置适用于当前纯静态 HTML/CSS/JavaScript 原型，无需 npm install 或 npm run build。
+
+参考：https://developers.cloudflare.com/pages/framework-guides/deploy-anything/

@@ -1,0 +1,128 @@
+[
+  {
+    "strategy": "lure",
+    "seed": "A",
+    "state": "end",
+    "wave": 4,
+    "hp": 100,
+    "time": 92,
+    "kills": 23,
+    "law": 9,
+    "firstLaw": 7.029000000000027,
+    "lured": 9,
+    "build": [
+      "mask",
+      "chain",
+      "dance",
+      "echo"
+    ],
+    "lawDamage": 2401,
+    "swordDamage": 1609,
+    "playerFines": 0
+  },
+  {
+    "strategy": "lure",
+    "seed": "B",
+    "state": "end",
+    "wave": 4,
+    "hp": 0,
+    "time": 76,
+    "kills": 19,
+    "law": 6,
+    "firstLaw": 7.029000000000027,
+    "lured": 6,
+    "build": [
+      "dance",
+      "echo",
+      "chain",
+      "mask"
+    ],
+    "lawDamage": 1675,
+    "swordDamage": 1540,
+    "playerFines": 0
+  },
+  {
+    "strategy": "lure",
+    "seed": "C",
+    "state": "end",
+    "wave": 4,
+    "hp": 52,
+    "time": 89,
+    "kills": 23,
+    "law": 11,
+    "firstLaw": 7.029000000000027,
+    "lured": 11,
+    "build": [
+      "dance",
+      "chain",
+      "mask",
+      "echo"
+    ],
+    "lawDamage": 2605,
+    "swordDamage": 1405,
+    "playerFines": 0
+  },
+  {
+    "strategy": "sword",
+    "seed": "A",
+    "state": "end",
+    "wave": 4,
+    "hp": 86,
+    "time": 230,
+    "kills": 23,
+    "law": 1,
+    "firstLaw": 80.12400000000234,
+    "lured": 0,
+    "build": [
+      "mask",
+      "chain",
+      "dance",
+      "echo"
+    ],
+    "lawDamage": 350,
+    "swordDamage": 3660,
+    "playerFines": 0
+  },
+  {
+    "strategy": "sword",
+    "seed": "B",
+    "state": "end",
+    "wave": 4,
+    "hp": 56,
+    "time": 226,
+    "kills": 23,
+    "law": 0,
+    "firstLaw": null,
+    "lured": 0,
+    "build": [
+      "dance",
+      "echo",
+      "chain",
+      "mask"
+    ],
+    "lawDamage": 220,
+    "swordDamage": 3790,
+    "playerFines": 0
+  },
+  {
+    "strategy": "sword",
+    "seed": "C",
+    "state": "end",
+    "wave": 4,
+    "hp": 70,
+    "time": 232,
+    "kills": 23,
+    "law": 0,
+    "firstLaw": null,
+    "lured": 0,
+    "build": [
+      "dance",
+      "chain",
+      "mask",
+      "echo"
+    ],
+    "lawDamage": 110,
+    "swordDamage": 3900,
+    "playerFines": 0
+  }
+]

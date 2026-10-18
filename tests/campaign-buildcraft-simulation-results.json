@@ -1,0 +1,911 @@
+[
+  {
+    "seed": "A",
+    "style": "rules",
+    "vow": "thunder",
+    "ending": "inherit",
+    "witnesses": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "result": {
+      "win": true,
+      "cause": "继律 · 你接过天灯，阿照的名字回到人间。你成为新执律者，保留证言，承担每一次判罚。",
+      "ending": "inherit"
+    },
+    "seconds": 413.1,
+    "hp": 37,
+    "chapter": 5,
+    "node": 3,
+    "build": [
+      "thunder",
+      "seal",
+      "wind",
+      "mandate",
+      "inscribe",
+      "lawblade",
+      "burn",
+      "shared"
+    ],
+    "stats": {
+      "kills": 122,
+      "lawKills": 42,
+      "lawDamage": 7535.849999999992,
+      "swordDamage": 15209.15000000002,
+      "transfers": 0,
+      "substitutions": 0,
+      "chains": 0,
+      "thunders": 87,
+      "followups": 55,
+      "playerFines": 8,
+      "rooms": 16,
+      "chapters": [
+        {
+          "chapter": 0,
+          "hp": 100,
+          "elapsed": 96.6,
+          "build": [
+            "thunder",
+            "seal",
+            "wind"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 1,
+          "hp": 100,
+          "elapsed": 194.5,
+          "build": [
+            "thunder",
+            "seal",
+            "wind",
+            "verdict",
+            "mandate"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 2,
+          "hp": 100,
+          "elapsed": 267.3,
+          "build": [
+            "thunder",
+            "seal",
+            "wind",
+            "verdict",
+            "mandate",
+            "inscribe",
+            "lawblade"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 3,
+          "hp": 100,
+          "elapsed": 350.1,
+          "build": [
+            "thunder",
+            "seal",
+            "wind",
+            "mandate",
+            "inscribe",
+            "lawblade",
+            "burn",
+            "shared"
+          ],
+          "edict": "demons"
+        }
+      ]
+    }
+  },
+  {
+    "seed": "A",
+    "style": "paper",
+    "vow": "paper",
+    "ending": "inherit",
+    "witnesses": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "result": {
+      "win": true,
+      "cause": "继律 · 你接过天灯，阿照的名字回到人间。你成为新执律者，保留证言，承担每一次判罚。",
+      "ending": "inherit"
+    },
+    "seconds": 384.9,
+    "hp": 64,
+    "chapter": 5,
+    "node": 3,
+    "build": [
+      "rebirth",
+      "burn",
+      "mask",
+      "wind",
+      "seal",
+      "thunder",
+      "pierce",
+      "drink"
+    ],
+    "stats": {
+      "kills": 125,
+      "lawKills": 15,
+      "lawDamage": 2303.7399999999993,
+      "swordDamage": 20846.260000000184,
+      "transfers": 0,
+      "substitutions": 0,
+      "chains": 0,
+      "thunders": 20,
+      "followups": 0,
+      "playerFines": 5,
+      "rooms": 16,
+      "chapters": [
+        {
+          "chapter": 0,
+          "hp": 100,
+          "elapsed": 94,
+          "build": [
+            "echo",
+            "rebirth",
+            "burn"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 1,
+          "hp": 100,
+          "elapsed": 181.9,
+          "build": [
+            "echo",
+            "rebirth",
+            "burn",
+            "mask",
+            "wind"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 2,
+          "hp": 100,
+          "elapsed": 247.8,
+          "build": [
+            "echo",
+            "rebirth",
+            "burn",
+            "mask",
+            "wind",
+            "seal",
+            "thunder"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 3,
+          "hp": 100,
+          "elapsed": 320.5,
+          "build": [
+            "rebirth",
+            "burn",
+            "mask",
+            "wind",
+            "seal",
+            "thunder",
+            "pierce",
+            "drink"
+          ],
+          "edict": "demons"
+        }
+      ]
+    }
+  },
+  {
+    "seed": "A",
+    "style": "sword",
+    "vow": "sword",
+    "ending": "inherit",
+    "witnesses": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "result": {
+      "win": true,
+      "cause": "继律 · 你接过天灯，阿照的名字回到人间。你成为新执律者，保留证言，承担每一次判罚。",
+      "ending": "inherit"
+    },
+    "seconds": 481.6,
+    "hp": 5,
+    "chapter": 5,
+    "node": 3,
+    "build": [
+      "verdict",
+      "rebirth",
+      "wind",
+      "seal",
+      "return",
+      "third",
+      "drink",
+      "turret"
+    ],
+    "stats": {
+      "kills": 121,
+      "lawKills": 25,
+      "lawDamage": 3661,
+      "swordDamage": 18665.599999999977,
+      "transfers": 0,
+      "substitutions": 0,
+      "chains": 0,
+      "thunders": 0,
+      "followups": 0,
+      "playerFines": 10,
+      "rooms": 16,
+      "chapters": [
+        {
+          "chapter": 0,
+          "hp": 100,
+          "elapsed": 89.2,
+          "build": [
+            "inscribe",
+            "verdict",
+            "rebirth"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 1,
+          "hp": 100,
+          "elapsed": 191.7,
+          "build": [
+            "inscribe",
+            "verdict",
+            "rebirth",
+            "wind",
+            "seal"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 2,
+          "hp": 100,
+          "elapsed": 275.1,
+          "build": [
+            "inscribe",
+            "verdict",
+            "rebirth",
+            "wind",
+            "seal",
+            "return",
+            "third"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 3,
+          "hp": 100,
+          "elapsed": 398.5,
+          "build": [
+            "verdict",
+            "rebirth",
+            "wind",
+            "seal",
+            "return",
+            "third",
+            "drink",
+            "turret"
+          ],
+          "edict": "demons"
+        }
+      ]
+    }
+  },
+  {
+    "seed": "B",
+    "style": "rules",
+    "vow": "thunder",
+    "ending": "inherit",
+    "witnesses": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "result": {
+      "win": true,
+      "cause": "继律 · 你接过天灯，阿照的名字回到人间。你成为新执律者，保留证言，承担每一次判罚。",
+      "ending": "inherit"
+    },
+    "seconds": 455.9,
+    "hp": 71,
+    "chapter": 5,
+    "node": 3,
+    "build": [
+      "seal",
+      "wind",
+      "mask",
+      "verdict",
+      "drink",
+      "burn",
+      "mandate",
+      "inscribe"
+    ],
+    "stats": {
+      "kills": 121,
+      "lawKills": 40,
+      "lawDamage": 6569.65,
+      "swordDamage": 15948.5500000001,
+      "transfers": 0,
+      "substitutions": 0,
+      "chains": 0,
+      "thunders": 70,
+      "followups": 0,
+      "playerFines": 6,
+      "rooms": 16,
+      "chapters": [
+        {
+          "chapter": 0,
+          "hp": 100,
+          "elapsed": 97.6,
+          "build": [
+            "thunder",
+            "seal",
+            "wind"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 1,
+          "hp": 100,
+          "elapsed": 202.3,
+          "build": [
+            "thunder",
+            "seal",
+            "wind",
+            "mask",
+            "verdict"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 2,
+          "hp": 100,
+          "elapsed": 279.9,
+          "build": [
+            "thunder",
+            "seal",
+            "wind",
+            "mask",
+            "verdict",
+            "drink",
+            "burn"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 3,
+          "hp": 100,
+          "elapsed": 378.3,
+          "build": [
+            "seal",
+            "wind",
+            "mask",
+            "verdict",
+            "drink",
+            "burn",
+            "mandate",
+            "inscribe"
+          ],
+          "edict": "demons"
+        }
+      ]
+    }
+  },
+  {
+    "seed": "B",
+    "style": "paper",
+    "vow": "paper",
+    "ending": "inherit",
+    "witnesses": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "result": {
+      "win": true,
+      "cause": "继律 · 你接过天灯，阿照的名字回到人间。你成为新执律者，保留证言，承担每一次判罚。",
+      "ending": "inherit"
+    },
+    "seconds": 375.7,
+    "hp": 46,
+    "chapter": 5,
+    "node": 3,
+    "build": [
+      "burn",
+      "mask",
+      "march",
+      "drink",
+      "thunder",
+      "seal",
+      "wind",
+      "return"
+    ],
+    "stats": {
+      "kills": 121,
+      "lawKills": 26,
+      "lawDamage": 3468.4999999999995,
+      "swordDamage": 19211.40000000009,
+      "transfers": 0,
+      "substitutions": 0,
+      "chains": 0,
+      "thunders": 41,
+      "followups": 0,
+      "playerFines": 8,
+      "rooms": 16,
+      "chapters": [
+        {
+          "chapter": 0,
+          "hp": 100,
+          "elapsed": 78.8,
+          "build": [
+            "echo",
+            "burn",
+            "mask"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 1,
+          "hp": 100,
+          "elapsed": 167.7,
+          "build": [
+            "echo",
+            "burn",
+            "mask",
+            "march",
+            "drink"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 2,
+          "hp": 100,
+          "elapsed": 230.4,
+          "build": [
+            "echo",
+            "burn",
+            "mask",
+            "march",
+            "drink",
+            "thunder",
+            "seal"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 3,
+          "hp": 100,
+          "elapsed": 308.1,
+          "build": [
+            "burn",
+            "mask",
+            "march",
+            "drink",
+            "thunder",
+            "seal",
+            "wind",
+            "return"
+          ],
+          "edict": "demons"
+        }
+      ]
+    }
+  },
+  {
+    "seed": "B",
+    "style": "sword",
+    "vow": "sword",
+    "ending": "inherit",
+    "witnesses": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "result": {
+      "win": true,
+      "cause": "继律 · 你接过天灯，阿照的名字回到人间。你成为新执律者，保留证言，承担每一次判罚。",
+      "ending": "inherit"
+    },
+    "seconds": 344.9,
+    "hp": 45,
+    "chapter": 5,
+    "node": 3,
+    "build": [
+      "inscribe",
+      "seal",
+      "mandate",
+      "pierce",
+      "rebirth",
+      "turret",
+      "return",
+      "emberblade"
+    ],
+    "stats": {
+      "kills": 125,
+      "lawKills": 18,
+      "lawDamage": 1805.15,
+      "swordDamage": 21344.849999999897,
+      "transfers": 0,
+      "substitutions": 0,
+      "chains": 0,
+      "thunders": 0,
+      "followups": 0,
+      "playerFines": 6,
+      "rooms": 16,
+      "chapters": [
+        {
+          "chapter": 0,
+          "hp": 100,
+          "elapsed": 90.6,
+          "build": [
+            "inscribe",
+            "seal",
+            "verdict"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 1,
+          "hp": 100,
+          "elapsed": 184.2,
+          "build": [
+            "inscribe",
+            "seal",
+            "verdict",
+            "mandate",
+            "pierce"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 2,
+          "hp": 100,
+          "elapsed": 234.6,
+          "build": [
+            "inscribe",
+            "seal",
+            "verdict",
+            "mandate",
+            "pierce",
+            "rebirth",
+            "turret"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 3,
+          "hp": 100,
+          "elapsed": 288.9,
+          "build": [
+            "inscribe",
+            "seal",
+            "mandate",
+            "pierce",
+            "rebirth",
+            "turret",
+            "return",
+            "emberblade"
+          ],
+          "edict": "demons"
+        }
+      ]
+    }
+  },
+  {
+    "seed": "C",
+    "style": "rules",
+    "vow": "thunder",
+    "ending": "inherit",
+    "witnesses": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "result": {
+      "win": true,
+      "cause": "继律 · 你接过天灯，阿照的名字回到人间。你成为新执律者，保留证言，承担每一次判罚。",
+      "ending": "inherit"
+    },
+    "seconds": 470.9,
+    "hp": 68,
+    "chapter": 5,
+    "node": 3,
+    "build": [
+      "wind",
+      "seal",
+      "emberblade",
+      "mask",
+      "drink",
+      "chain",
+      "mandate",
+      "pierce"
+    ],
+    "stats": {
+      "kills": 122,
+      "lawKills": 37,
+      "lawDamage": 6432.43,
+      "swordDamage": 16210.330000000044,
+      "transfers": 0,
+      "substitutions": 0,
+      "chains": 1,
+      "thunders": 68,
+      "followups": 0,
+      "playerFines": 6,
+      "rooms": 16,
+      "chapters": [
+        {
+          "chapter": 0,
+          "hp": 100,
+          "elapsed": 101.7,
+          "build": [
+            "thunder",
+            "wind",
+            "seal"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 1,
+          "hp": 100,
+          "elapsed": 199,
+          "build": [
+            "thunder",
+            "wind",
+            "seal",
+            "emberblade",
+            "mask"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 2,
+          "hp": 100,
+          "elapsed": 280.5,
+          "build": [
+            "thunder",
+            "wind",
+            "seal",
+            "emberblade",
+            "mask",
+            "drink",
+            "chain"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 3,
+          "hp": 100,
+          "elapsed": 391.8,
+          "build": [
+            "wind",
+            "seal",
+            "emberblade",
+            "mask",
+            "drink",
+            "chain",
+            "mandate",
+            "pierce"
+          ],
+          "edict": "demons"
+        }
+      ]
+    }
+  },
+  {
+    "seed": "C",
+    "style": "paper",
+    "vow": "paper",
+    "ending": "inherit",
+    "witnesses": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "result": {
+      "win": true,
+      "cause": "继律 · 你接过天灯，阿照的名字回到人间。你成为新执律者，保留证言，承担每一次判罚。",
+      "ending": "inherit"
+    },
+    "seconds": 375.7,
+    "hp": 36,
+    "chapter": 5,
+    "node": 3,
+    "build": [
+      "echo",
+      "burn",
+      "wind",
+      "shared",
+      "seal",
+      "thunder",
+      "drink",
+      "verdict"
+    ],
+    "stats": {
+      "kills": 123,
+      "lawKills": 19,
+      "lawDamage": 2977.7,
+      "swordDamage": 19902.3,
+      "transfers": 0,
+      "substitutions": 0,
+      "chains": 0,
+      "thunders": 32,
+      "followups": 0,
+      "playerFines": 8,
+      "rooms": 16,
+      "chapters": [
+        {
+          "chapter": 0,
+          "hp": 100,
+          "elapsed": 78.6,
+          "build": [
+            "echo",
+            "burn",
+            "march"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 1,
+          "hp": 100,
+          "elapsed": 165.3,
+          "build": [
+            "echo",
+            "burn",
+            "march",
+            "wind",
+            "shared"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 2,
+          "hp": 100,
+          "elapsed": 234.3,
+          "build": [
+            "echo",
+            "burn",
+            "march",
+            "wind",
+            "shared",
+            "seal",
+            "thunder"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 3,
+          "hp": 100,
+          "elapsed": 310.4,
+          "build": [
+            "echo",
+            "burn",
+            "wind",
+            "shared",
+            "seal",
+            "thunder",
+            "drink",
+            "verdict"
+          ],
+          "edict": "demons"
+        }
+      ]
+    }
+  },
+  {
+    "seed": "C",
+    "style": "sword",
+    "vow": "sword",
+    "ending": "inherit",
+    "witnesses": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "result": {
+      "win": true,
+      "cause": "继律 · 你接过天灯，阿照的名字回到人间。你成为新执律者，保留证言，承担每一次判罚。",
+      "ending": "inherit"
+    },
+    "seconds": 387.6,
+    "hp": 37,
+    "chapter": 5,
+    "node": 3,
+    "build": [
+      "return",
+      "seal",
+      "verdict",
+      "mandate",
+      "pierce",
+      "third",
+      "turret",
+      "burn"
+    ],
+    "stats": {
+      "kills": 122,
+      "lawKills": 22,
+      "lawDamage": 2809.5499999999997,
+      "swordDamage": 20008.85000000003,
+      "transfers": 0,
+      "substitutions": 0,
+      "chains": 0,
+      "thunders": 0,
+      "followups": 0,
+      "playerFines": 8,
+      "rooms": 16,
+      "chapters": [
+        {
+          "chapter": 0,
+          "hp": 100,
+          "elapsed": 91.4,
+          "build": [
+            "inscribe",
+            "return",
+            "seal"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 1,
+          "hp": 100,
+          "elapsed": 190.3,
+          "build": [
+            "inscribe",
+            "return",
+            "seal",
+            "verdict",
+            "mandate"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 2,
+          "hp": 100,
+          "elapsed": 246.8,
+          "build": [
+            "inscribe",
+            "return",
+            "seal",
+            "verdict",
+            "mandate",
+            "pierce",
+            "third"
+          ],
+          "edict": "demons"
+        },
+        {
+          "chapter": 3,
+          "hp": 100,
+          "elapsed": 320.4,
+          "build": [
+            "return",
+            "seal",
+            "verdict",
+            "mandate",
+            "pierce",
+            "third",
+            "turret",
+            "burn"
+          ],
+          "edict": "demons"
+        }
+      ]
+    }
+  }
+]

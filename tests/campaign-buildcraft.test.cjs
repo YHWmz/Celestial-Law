@@ -1,0 +1,15 @@
+const assert=require('node:assert/strict');const {Campaign,VOWS}=require('../campaign-core.js');
+function start(id){const g=new Campaign();g.start('CRAFT');g.continueStory();assert(g.chooseSkill(id));return g;}
+function build(g,ids){g.build=ids;g.levels=Object.fromEntries(ids.map(x=>[x,1]));}
+function tick(g,n){for(let i=0;i<n;i++)g.tick(.02,{autoFire:false});}
+function foe(g,x=560,y=480){const e=g.makeEnemy('walker',x,y);e.hp=e.maxHp=1000;e.speed=0;return e;}
+for(const [id,v] of Object.entries(VOWS)){const g=start(v.starter);assert.equal(g.vow,id);assert.equal(Campaign.restore(g.snapshot()).vow,id);}
+let g=start('inscribe');g.enemies=[];let e=foe(g);g.hitCount=2;g.attack(e);assert.equal(g.shots[0].damage,12);tick(g,8);assert.equal(g.shots.filter(s=>s.kind==='vow').length,2);const count=g.hitCount;tick(g,20);assert.equal(g.hitCount,count,'split swords do not increment combo');
+g=start('echo');g.castPaper({x:560,y:400});assert.equal(g.papers.length,2);assert.equal(g.player.paperCd,8);g.player.paperCd=0;g.castPaper({x:560,y:400});assert.equal(g.papers.length,3);g.papers=[];g.obstacles=[{x:500,y:300,w:200,h:150}];g.player.paperCd=0;g.castPaper({x:560,y:400});assert(g.papers.every(p=>!g.obstacles.some(b=>p.x>b.x-12&&p.x<b.x+b.w+12&&p.y>b.y-12&&p.y<b.y+b.h+12)));
+g=start('thunder');g.push();assert.equal(g.player.pushCd,2.6);g.attack(g.enemies[0]);assert.equal(g.player.shotCd,.42);
+g=start('inscribe');g.enemies=[];build(g,['inscribe','lawblade','verdict']);e=foe(g);g.fire(g.player,e,10,'follow');tick(g,8);assert(e.mark>0);assert.equal(g.hitCount,0);g.build=g.build.filter(x=>x!=='verdict');assert(!g.resonance('swordcycle'));
+g=start('echo');g.enemies=[];build(g,['echo','march','burn']);e=foe(g,600,400);e.attackCd=100;g.addPaper(560,400);tick(g,52);assert(e.mark>0);assert(e.pushed>0);
+g=start('thunder');g.enemies=[];build(g,['thunder','wind','seal','drink','chain','lawblade']);e=foe(g,500,400);const b=foe(g,580,400);e.stun=1;e.mark=6;b.mark=6;const root=g.event('thunder');g.damage(e,35,'thunder',root);assert.equal(b.hp,985);assert.equal(g.emberGains,1);assert.equal(g.stats.followups,1,'splash does not trigger extra followups');
+g=start('inscribe');build(g,['inscribe','lawblade']);g.offer('branch');assert(g.deck.includes('verdict'));assert.equal(g.rewardRoles.verdict,'补齐组合');assert(g.rewardHint('verdict').includes('选取即成型'));const ban=g.deck[0];assert(g.banish(ban));assert(!g.deck.includes(ban));const h=Campaign.restore(g.snapshot());assert(h.banished.includes(ban));assert.equal(h.banishCharges,1);for(let i=0;i<20;i++){h.offer('challenge');assert(!h.deck.includes(ban));assert.equal(new Set(h.deck).size,h.deck.length);}
+const a=start('echo'),c=start('echo');a.offer('branch');c.offer('branch');assert.deepEqual(a.deck,c.deck);a.banish(a.deck[0]);c.banish(c.deck[0]);assert.deepEqual(a.deck,c.deck);
+console.log('Buildcraft checks passed: three vow tradeoffs, split-sword isolation, paper collision/cap, three transformations, replacement deactivation, deterministic combo-aware rewards, banish and save.');

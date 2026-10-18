@@ -1,7 +1,7 @@
 const {Campaign,dist,CHAPTERS}=require('../campaign-core.js');
 function simulate(seed,style,ending='inherit'){
  const g=new Campaign();g.start(seed);let steps=0;
- const order=style==='sword'?['inscribe','third','turret','lawblade','chain','force','echo','substitute','thunder','march','pilgrim','borrow']:style==='paper'?['thunder','echo','march','turret','pilgrim','substitute','chain','inscribe','lawblade','force','third','borrow']:['thunder','inscribe','lawblade','chain','third','march','turret','echo','force','substitute','pilgrim','borrow'];
+ const order=style==='sword'?['inscribe','third','turret','lawblade','chain','force','echo','substitute','thunder','march','pilgrim','borrow']:style==='paper'?['echo','thunder','march','turret','pilgrim','substitute','chain','inscribe','lawblade','force','third','borrow']:['thunder','inscribe','lawblade','chain','third','march','turret','echo','force','substitute','pilgrim','borrow'];
  while(g.phase!=='end'&&steps++<100000){
   if(g.phase==='story')g.continueStory();
   else if(g.phase==='reward')g.chooseSkill([...g.deck].sort((a,b)=>order.indexOf(a)-order.indexOf(b))[0]);
@@ -25,7 +25,7 @@ function simulate(seed,style,ending='inherit'){
    g.tick(.033,{mx,my,point:g.endingMode==='break'&&g.lawKind()===1&&g.clock<.35?g.activeStatue():near||goal,fire:true,push:near&&dist(p,near)<160,dash:near&&dist(p,near)<65});
   }else throw Error(g.phase);
  }
- return {seed,style,ending,witnesses:g.witnesses,result:g.result,seconds:+g.elapsed.toFixed(1),hp:g.hp,chapter:g.chapter+1,node:g.node+1,build:g.build,stats:g.stats};
+ return {seed,style,vow:g.vow,ending,witnesses:g.witnesses,result:g.result,seconds:+g.elapsed.toFixed(1),hp:g.hp,chapter:g.chapter+1,node:g.node+1,build:g.build,stats:g.stats};
 }
 const results=['A','B','C'].flatMap(seed=>['rules','paper','sword'].map(style=>simulate(seed,style)));
 if(require.main===module){console.log(JSON.stringify(results,null,2));}

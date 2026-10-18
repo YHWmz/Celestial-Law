@@ -7,7 +7,7 @@
   const angleDelta = (a,b) => Math.atan2(Math.sin(a-b),Math.cos(a-b));
   const clone = x => JSON.parse(JSON.stringify(x));
   const SKILLS = [
-    {id:'inscribe',name:'篆剑诀',glyph:'印',group:'施印',in:['activeSword'],out:['mark'],desc:'主动飞剑命中施加 6 秒律印。纸人剑和追击剑不能再次施印。'},
+    {id:'inscribe',name:'篆剑诀',glyph:'印',group:'施印',in:['activeSword'],out:['mark'],desc:'主动飞剑命中施加 6 秒律印。纸人剑不施印；追击剑仅在“剑律循环”成型后补印。'},
     {id:'third',name:'三叠浪',glyph:'浪',group:'位移',in:['activeSword'],out:['move'],desc:'每第三次主动飞剑命中，将目标推开。重型妖物受半量推力，灵牌可完整推动。'},
     {id:'force',name:'撼山步',glyph:'撼',group:'位移',in:['push'],out:['move'],desc:'震步范围增加 25%，推力增加 20%。也能推动报丧人的归责灵牌。'},
     {id:'echo',name:'留影步',glyph:'影',group:'替身',in:['dash'],out:['paper'],desc:'闪避在原地留下 4 秒纸人。与 E 共用最多 3 个纸人的上限。'},
@@ -18,7 +18,7 @@
     {id:'chain',name:'连坐经',glyph:'连',group:'裁决',in:['law'],out:['area'],desc:'规则击杀使周围 125 步妖物承受 30 规则伤害。连坐本身不会继续触发连坐或追击剑。'},
     {id:'borrow',name:'偷名符',glyph:'名',group:'桥接',bridge:true,in:['push'],out:['transfer','law'],desc:'震步给最近命中妖物缔结 6 秒名契。你受罚时改由它承受 80% 对敌裁决伤害。一次一个名契，冷却 8 秒。'},
     {id:'march',name:'纸上行军',glyph:'行',group:'桥接',bridge:true,in:['paper'],out:['move'],desc:'纸人出现 1 秒后，向周围 100 步妖物发出一次推击。留影步同样生效，脉冲不直接伤害。'},
-    {id:'lawblade',name:'借律成剑',glyph:'敕',group:'桥接',bridge:true,in:['mark','law'],out:['projectile'],desc:'规则伤害命中有印目标时，从你的位置发出追击剑。每次裁决最多 3 剑；追击不会施印、推击或递归触发。'},
+    {id:'lawblade',name:'借律成剑',glyph:'敕',group:'桥接',bridge:true,in:['mark','law'],out:['projectile'],desc:'规则伤害命中有印目标时，从你的位置发出追击剑。每次裁决最多 3 剑；追击默认不施印，不推击或递归触发；剑律循环成型后可补印。'},
     {id:'pierce',name:'穿山引',glyph:'穿',group:'飞剑',in:['activeSword'],out:['activeSword'],desc:'主动剑额外贯穿两敌；后续命中为首击的 70%，保留施印与主动命中效果。'},
     {id:'return',name:'回锋诀',glyph:'回',group:'飞剑',in:['activeSword','mark'],out:['dash'],desc:'主动剑命中有印目标，缩短闪避冷却 0.04 秒；每秒最多 0.4 秒。'},
     {id:'seal',name:'定身敕',glyph:'定',group:'位移',in:['push','mark'],out:['still'],desc:'震步命中有印目标，推移结束后定身 1.2 秒并保持朝向；无印目标减速 25%。'},
@@ -33,6 +33,16 @@
     {id:'verdict',name:'断案诀',glyph:'断',group:'桥接',bridge:true,in:['activeSword','mark'],out:['mark','law'],desc:'主动剑击杀有印敌人，将印转给最近敌人并造成 25 规则伤害。冷却 2 秒。'}
   ];
   const SKILL = Object.fromEntries(SKILLS.map(s=>[s.id,s]));
+  const VOWS = {
+    sword:{name:'剑印法门',starter:'inscribe',tags:['activeSword','mark','projectile'],desc:'自动剑伤害降为 12；每第三次自动剑命中有印目标，另发两柄 8 伤追踪剑。追踪剑不计主动连击。'},
+    paper:{name:'纸阵法门',starter:'echo',tags:['paper','facing','protect'],desc:'E 一次布下两只纸人，仍共用三只上限；E 冷却由 6 秒变为 8 秒。闪避留影照常。'},
+    thunder:{name:'震雷法门',starter:'thunder',tags:['move','push','law','still'],desc:'Q 冷却从 3.5 秒缩短为 2.6 秒；自动剑间隔从 0.34 秒变为 0.42 秒。靠震步施印、推移、落雷。'}
+  };
+  const RESONANCES = [
+    {id:'swordcycle',name:'剑律循环',skills:['inscribe','lawblade','verdict'],desc:'借律追击剑命中后补上 3 秒律印，让下一轮裁决继续成剑。补印不能触发主动剑连击。'},
+    {id:'paperfuneral',name:'百纸送葬',skills:['echo','march','burn'],desc:'纸上行军的推击同时施加 3 秒律印。留影布阵、行军施印、毁纸爆破可接到追雷或借尸还剑。'},
+    {id:'thunderflow',name:'震雷回流',skills:['thunder','wind','seal'],desc:'追雷击中定身目标时，对周围 125 步敌人造成 15 规则伤害。溅射不能触发追击、连坐或资源返还。'}
+  ];
   const CHAPTERS = [
     {name:'报丧村',seal:'钟',nodes:['止步巷','棺阵侧院','转运簿','押灵路','残香庙','祖祠 · 报丧人']},
     {name:'回首祠',seal:'目',nodes:['独眼庭','屏风廊','盲证人','驱纸院','祠外灯亭','背神台 · 守祠人']},
@@ -77,7 +87,7 @@
     constructor(seed=''){this.reset(seed);}
     reset(seed){
       this.rng=new RNG(seed);this.aiRng=new RNG(seed+':actors');this.phase='menu';this.chapter=0;this.node=0;this.edict='original';this.edited=false;
-      this.finalEdicts={};this.witnesses=[];this.protect=false;this.witnessTask=null;this.embers=0;this.emberGains=0;this.roomHealing=0;this.finalStage=0;this.endingMode=null;this.endingRounds=0;this.pact=false;this.pillars=[];this.seals=[];this.token=false;this.boundPillar=-1;this.buildPending=null;
+      this.vow=null;this.banished=[];this.banishCharges=2;this.rewardRoles={};this.finalEdicts={};this.witnesses=[];this.protect=false;this.witnessTask=null;this.embers=0;this.emberGains=0;this.roomHealing=0;this.finalStage=0;this.endingMode=null;this.endingRounds=0;this.pact=false;this.pillars=[];this.seals=[];this.token=false;this.boundPillar=-1;this.buildPending=null;
       this.seed=seed;this.build=[];this.levels={};this.hp=100;this.coins=0;this.rerolls=2;this.elapsed=0;this.uid=0;this.rootId=0;this.attackCount=0;this.hitCount=0;
       this.enemies=[];this.papers=[];this.shots=[];this.effects=[];this.obstacles=[];this.proxy=null;this.deck=[];this.evidence=[];this.story='opening';this.route='normal';this.chapterRoutes=[];
       this.stats={kills:0,lawKills:0,lawDamage:0,swordDamage:0,transfers:0,substitutions:0,chains:0,thunders:0,followups:0,playerFines:0,rooms:0,chapters:[]};
@@ -85,6 +95,10 @@
       this.player={id:0,x:560,y:555,r:14,facing:-Math.PI/2,player:true,hp:100,moved:0,blind:false,inv:0,dash:0,dx:0,dy:-1,shotCd:0,pushCd:0,paperCd:0,dashCd:0,borrowCd:0,subCd:0};
     }
     has(id){return this.build.includes(id);}
+    resonance(id){return RESONANCES.find(r=>r.id===id)?.skills.every(k=>this.has(k))||false;}
+    buildProgress(build=this.build){return RESONANCES.map(r=>({...r,missing:r.skills.filter(k=>!build.includes(k)),count:r.skills.filter(k=>build.includes(k)).length}));}
+    rewardHint(id){const before=this.buildProgress(),after=this.buildProgress([...this.build,id]);const completed=after.find((r,i)=>!r.missing.length&&before[i].missing.length);if(completed)return (this.build.length>=8?'保留其他组件即可成型：':'选取即成型：')+completed.name;const progress=after.filter((r,i)=>r.count>before[i].count).sort((a,b)=>b.count-a.count)[0];return progress?progress.name+' · '+progress.count+'/3，尚缺 '+progress.missing.map(k=>SKILL[k].name).join('、'):'可独立使用，或连接已有触发效果';}
+    banish(id){if(this.phase!=='reward'||this.rewardContext==='start'||!this.deck.includes(id)||this.banishCharges<=0)return false;this.banished.push(id);this.banishCharges--;this.offer(this.rewardContext);return true;}
     scale(id){return 1+.15*((this.levels[id]||1)-1);}
     say(text){this.message=text;this.log.push({at:+this.elapsed.toFixed(2),text});if(this.log.length>120)this.log.shift();}
     sound(name){this.sounds.push(name);if(this.sounds.length>30)this.sounds.shift();}
@@ -113,18 +127,29 @@
     connections(id){const s=SKILL[id];return this.build.filter(k=>k!==id&&(SKILL[k].out.some(x=>s.in.includes(x))||s.out.some(x=>SKILL[k].in.includes(x))));}
     offer(context){
       this.phase='reward';this.rewardContext=context;
-      let pool=SKILLS.filter(s=>!this.has(s.id)&&(!s.bridge||this.build.length>=8||this.build.filter(k=>SKILL[k].bridge).length<2));
-      if(context==='start')pool=pool.filter(s=>['inscribe','third','thunder'].includes(s.id));
+      let pool=SKILLS.filter(s=>!this.has(s.id)&&!this.banished.includes(s.id)&&(!s.bridge||this.build.length>=8||this.build.filter(k=>SKILL[k].bridge).length<2));
+      if(context==='start')pool=pool.filter(s=>Object.values(VOWS).some(v=>v.starter===s.id));
       else pool=pool.filter(s=>!s.bridge||s.in.some(x=>['push','paper','activeSword','dash'].includes(x)||this.build.some(k=>SKILL[k].out.includes(x))));
-      let ids=this.rng.shuffle(pool.map(s=>s.id));const linked=ids.find(id=>this.connections(id).length);
-      if(context!=='start'&&linked)ids=[linked,...ids.filter(id=>id!==linked)];
-      this.deck=ids.slice(0,3);
+      const shuffled=this.rng.shuffle(pool.map(s=>s.id));this.rewardRoles={};
+      if(context==='start'){this.deck=shuffled;return;}
+      const remaining=[...shuffled],deck=[];
+      const pick=(id,label)=>{if(!id)return;deck.push(id);remaining.splice(remaining.indexOf(id),1);this.rewardRoles[id]=label;};
+      // Seeded ties stay random. The combination slot prioritizes a missing final piece.
+      const progress=this.buildProgress().filter(r=>r.count>0&&r.missing.length).sort((a,b)=>b.count-a.count);
+      const piece=progress.flatMap(r=>shuffled.filter(id=>r.missing.includes(id)))[0];
+      pick(piece,'补齐组合');
+      const tags=VOWS[this.vow]?.tags||[];
+      pick(remaining.find(id=>this.connections(id).length&&[...SKILL[id].in,...SKILL[id].out].some(t=>tags.includes(t)))||remaining.find(id=>this.connections(id).length),'续接流派');
+      const outside=remaining.find(id=>![...SKILL[id].in,...SKILL[id].out].some(t=>tags.includes(t)));pick(outside||remaining[0],outside?'跨流尝试':'随机机缘');
+      while(deck.length<3&&remaining.length)pick(remaining[0],'随机机缘');
+      this.deck=deck;
     }
+
     chooseSkill(id){
       if(this.phase!=='reward'||!this.deck.includes(id)||!SKILL[id]||this.has(id))return false;
       if(this.build.length>=8){this.buildPending=id;this.phase='replace';return true;}
       if(SKILL[id].bridge&&this.build.filter(k=>SKILL[k].bridge).length>=2)return false;
-      this.build.push(id);this.levels[id]=1;this.sound('reward');this.nextReward();return true;
+      if(this.rewardContext==='start')this.vow=Object.keys(VOWS).find(k=>VOWS[k].starter===id)||null;this.build.push(id);this.levels[id]=1;this.sound('reward');this.nextReward();return true;
     }
     reroll(){if(this.phase!=='reward'||this.rerolls<=0||this.rewardContext==='start')return false;this.rerolls--;this.offer(this.rewardContext);return true;}
     chooseRoute(route){if(this.phase!=='route'||!['normal','elite'].includes(route))return false;this.route=route;this.chapterRoutes.push({chapter:this.chapter,node:this.node,route});this.beginRoom();return true;}
@@ -207,14 +232,15 @@
     }
     castPaper(point){
       const p=this.player;if(this.phase!=='combat'||p.paperCd>0)return false;
-      const d=Math.max(1,dist(p,point)),f=Math.min(1,260/d),o=this.addPaper(clamp(p.x+(point.x-p.x)*f,70,1050),clamp(p.y+(point.y-p.y)*f,120,610));p.paperCd=6;if(this.has('mask'))p.paperForm=2*this.scale('mask');
+      const d=Math.max(1,dist(p,point)),f=Math.min(1,260/d),o=this.addPaper(clamp(p.x+(point.x-p.x)*f,70,1050),clamp(p.y+(point.y-p.y)*f,120,610));p.paperCd=this.vow==='paper'?8:6;if(this.has('mask'))p.paperForm=2*this.scale('mask');
       // Do not put an inaccessible bait inside a solid screen.
       if(this.obstacles.some(r=>o.x>r.x-12&&o.x<r.x+r.w+12&&o.y>r.y-12&&o.y<r.y+r.h+12)){o.x=p.x;o.y=p.y;}
+      if(this.vow==='paper'){const second=this.addPaper(clamp(o.x+48,70,1050),o.y);if(this.obstacles.some(r=>second.x>r.x-12&&second.x<r.x+r.w+12&&second.y>r.y-12&&second.y<r.y+r.h+12)){second.x=p.x;second.y=p.y;}}
       if(this.has('pilgrim')&&!this.chapter)for(const e of this.enemies)if(dist(o,e)<150*this.scale('pilgrim')){e.facing=Math.atan2(o.y-e.y,o.x-e.x);e.slow=1;}
       this.sound('paper');return true;
     }
     push(){
-      const p=this.player;if(this.phase!=='combat'||p.pushCd>0||p.blind)return false;p.pushCd=3.5;const range=165*(this.has('force')?1.25*this.scale('force'):1),power=400*(this.has('force')?1.2:1);
+      const p=this.player;if(this.phase!=='combat'||p.pushCd>0||p.blind)return false;p.pushCd=this.vow==='thunder'?2.6:3.5;const range=165*(this.has('force')?1.25*this.scale('force'):1),power=400*(this.has('force')?1.2:1);
       const hits=this.enemies.filter(e=>e.hp>0&&dist(p,e)<=range);for(const e of hits){if(this.has('thunder'))e.mark=6;if(this.has('seal')){if(e.mark>0)e.pendingSeal=true;else e.slow=2;}this.impulse(e,p,power);}
       if(this.has('shared')&&hits.length>=2){const pair=[...hits].sort((a,b)=>dist(p,a)-dist(p,b)).slice(0,2);pair[0].linked=pair[1].id;pair[1].linked=pair[0].id;pair.forEach(e=>e.linkTime=4);}
       if(this.has('borrow')&&hits.length){this.enemies.forEach(e=>e.name=0);hits.sort((a,b)=>dist(p,a)-dist(p,b))[0].name=6;}
@@ -227,23 +253,23 @@
       return this.enemies.filter(e=>e.hp>0&&!hits.includes(e.id)&&!this.obstacles.some(r=>segmentRect(from,e,r))).sort((a,b)=>dist(from,a)-dist(from,b))[0];
     }
     fire(from,target,damage,kind='active',extra={}){
-      const homing=['active','paper','follow'].includes(kind);
+      const homing=['active','paper','follow','vow'].includes(kind);
       const locked=homing?(this.enemies.find(e=>e===target&&e.hp>0)||this.swordTarget(from,extra.hits)):null;
       const aim=locked||target,a=Math.atan2(aim.y-from.y,aim.x-from.x);
       this.shots.push({x:from.x,y:from.y,vx:Math.cos(a)*640,vy:Math.sin(a)*640,damage,kind,life:1.8,homing,targetId:locked?.id??null,...extra});
     }
     trackSword(shot){
-      if(!['active','paper','follow'].includes(shot.kind))return;
+      if(!['active','paper','follow','vow'].includes(shot.kind))return;
       // Keep a lock while it lives; piercing and dead targets retarget only unhit enemies.
       const target=this.enemies.find(e=>e.id===shot.targetId&&e.hp>0&&!(shot.hits||[]).includes(e.id))||this.swordTarget(shot,shot.hits);
       shot.targetId=target?.id??null;if(!target)return;
       const angle=Math.atan2(target.y-shot.y,target.x-shot.x);
       shot.vx=Math.cos(angle)*640;shot.vy=Math.sin(angle)*640;
     }
-    attack(point){const p=this.player;if(this.phase!=='combat'||p.shotCd>0||p.blind)return false;p.shotCd=.34;this.attackCount++;this.fire(p,this.swordTarget(p)||point,16*(p.paperForm>0?.7:1),'active',{third:this.attackCount%3===0,hits:[],pierce:this.has('pierce')?2:0});this.sound('sword');return true;}
+    attack(point){const p=this.player;if(this.phase!=='combat'||p.shotCd>0||p.blind)return false;p.shotCd=this.vow==='thunder'?.42:.34;this.attackCount++;this.fire(p,this.swordTarget(p)||point,(this.vow==='sword'?12:16)*(p.paperForm>0?.7:1),'active',{third:this.attackCount%3===0,hits:[],pierce:this.has('pierce')?2:0});this.sound('sword');return true;}
     interact(){if(this.phase!=='combat')return false;if(this.specialInteract())return true;if(!this.proxy)return false;if(this.proxy.drag){this.proxy.drag=false;this.say('已放下归责灵牌。');return true;}if(dist(this.player,this.proxy)>130)return false;this.proxy.drag=true;this.say('正在牵引灵牌：你的移动将记在报丧人名下。再次 F 放下。');return true;}
     damage(e,n,source,root=this.event(source),terminal=false){
-      if(e.hp<=0)return;if(this.chapter===4&&this.endingMode==='common'&&e.type==='boss')n=Math.min(n,Math.max(0,e.hp-1));const marked=e.mark>0,law=['law','thunder','transfer','chain','shared','verdict'].includes(source);
+      if(e.hp<=0)return;if(this.chapter===4&&this.endingMode==='common'&&e.type==='boss')n=Math.min(n,Math.max(0,e.hp-1));const marked=e.mark>0,law=['law','thunder','transfer','chain','shared','verdict','resonance'].includes(source);
       if(law&&marked&&this.has('mandate')&&['law','thunder'].includes(source)){n*=1+.3*this.scale('mandate');e.mark=0;}
       if(law&&!terminal){if(this.has('drink')&&!root.ember){root.ember=true;this.embers=Math.min(3,this.embers+1);this.emberGains++;if(this.emberGains%3===0&&this.roomHealing<12){this.hp=Math.min(100,this.hp+3);this.player.hp=this.hp;this.roomHealing+=3;}}if(this.has('wind')&&e.pushed>0&&(root.wind||0)<3){root.wind=(root.wind||0)+1;this.player.pushCd=Math.max(0,this.player.pushCd-.8*this.scale('wind'));}if(this.has('shared')&&e.linkTime>0){const pair=this.enemies.find(o=>o.id===e.linked&&o.hp>0);if(pair)this.damage(pair,n*.3*this.scale('shared'),'shared',root,true);}}
       if(!law&&e.type==='boss'&&this.chapter&&this.clock<1.5&&e.wardBreak<=0&&!marked)n*=.5;
@@ -251,6 +277,7 @@
       this.effects.push({type:'number',x:e.x,y:e.y-60,text:Math.round(n),life:.65,max:.65,color:law?'#f6d187':'#cbf4e5'});
       if(law){this.effects.push({type:'bolt',x:e.x,y:e.y,life:.3,max:.3,color:'#f6d187'});this.sound('thunder');}
       else this.sound('hit');
+      if(source==='thunder'&&!terminal&&e.stun>0&&this.resonance('thunderflow')){for(const other of this.enemies)if(other!==e&&other.hp>0&&dist(e,other)<=125)this.damage(other,15,'resonance',root,true);this.say('震雷回流：定身 → 追雷 → 雷罚溅射');}
       if(law&&marked&&!terminal&&this.has('lawblade')&&root.followups<3){root.followups++;this.stats.followups++;const followTarget=e.hp>0?e:this.enemies.filter(o=>o.hp>0).sort((a,b)=>dist(e,a)-dist(e,b))[0];if(followTarget)this.fire(this.player,followTarget,16*.6*this.scale('lawblade'),'follow');this.say('律印 → '+(source==='thunder'?'追雷':'裁决')+' → 借律成剑');}
       if(e.hp<=0){if(source==='active'&&marked&&this.has('verdict')&&!(this.player.verdictCd>0)){const other=this.enemies.filter(o=>o!==e&&o.hp>0).sort((a,b)=>dist(e,a)-dist(e,b))[0];if(other){this.player.verdictCd=2;other.mark=6;this.damage(other,25*this.scale('verdict'),'verdict');}}this.stats.kills++;if(law){this.stats.lawKills++;if(source==='chain')this.stats.chains++;
         if(this.has('chain')&&!terminal){for(const other of this.enemies)if(other!==e&&other.hp>0&&dist(e,other)<=125)this.damage(other,30*this.scale('chain'),'chain',root,true);this.say('规则击杀 → 连坐经');}}
@@ -305,7 +332,7 @@
       const s=this.activeStatue();if(this.lawKind()===1&&this.clock>1.5)s.angle+=clamp(angleDelta(s.target,s.angle),-dt*.5,dt*.5);
       if(this.proxy){const o=this.proxy,ox=o.x,oy=o.y;if(o.drag){const d=dist(o,p);if(d>55)this.move(o,(p.x-o.x)/d*Math.min(d-55,220*dt),(p.y-o.y)/d*Math.min(d-55,220*dt));}this.move(o,o.vx*dt,o.vy*dt);o.vx*=Math.exp(-5*dt);o.vy*=Math.exp(-5*dt);o.moved=Math.hypot(o.x-ox,o.y-oy)/dt;}
       for(const o of this.papers){o.life-=dt;o.age+=dt;o.shotCd-=dt;
-        if(this.has('march')&&!o.pulsed&&o.age>=1){o.pulsed=true;for(const e of this.enemies)if(e.hp>0&&dist(o,e)<=100*this.scale('march'))this.impulse(e,o,220);if(this.proxy&&dist(o,this.proxy)<=100)this.impulse(this.proxy,o,220);this.effects.push({type:'ring',x:o.x,y:o.y,r:100,life:.4,max:.4,color:'#b6e5c7'});}
+        if(this.has('march')&&!o.pulsed&&o.age>=1){o.pulsed=true;for(const e of this.enemies)if(e.hp>0&&dist(o,e)<=100*this.scale('march')){this.impulse(e,o,220);if(this.resonance('paperfuneral'))e.mark=Math.max(e.mark,3);}if(this.proxy&&dist(o,this.proxy)<=100)this.impulse(this.proxy,o,220);this.effects.push({type:'ring',x:o.x,y:o.y,r:100,life:.4,max:.4,color:'#b6e5c7'});}
         if(this.has('turret')&&o.shotCd<=0){const marked=this.enemies.filter(e=>e.hp>0&&e.mark>0),pool=marked.length?marked:this.enemies.filter(e=>e.hp>0);const target=pool.sort((a,b)=>dist(a,o)-dist(b,o))[0];if(target){this.fire(o,target,16*.6*this.scale('turret'),'paper');o.shotCd=marked.length?1.2:2.4;}}
       }
       for(const o of this.papers)if(o.hp<=0)this.destroyPaper(o);this.papers=this.papers.filter(o=>o.life>0&&o.hp>0);
@@ -341,9 +368,10 @@
           if(e){let amount=shot.damage;if(shot.kind==='active'){const wasMarked=e.mark>0;shot.third=++this.hitCount%3===0;
             if(this.has('return')&&wasMarked){if(!(p.returnWindow>0)){p.returnWindow=1;p.returnUsed=0;}const refund=Math.min(.04*this.scale('return'),.4-(p.returnUsed||0));p.returnUsed+=refund;p.dashCd=Math.max(0,p.dashCd-refund);}
             if(this.has('inscribe')&&!(p.paperForm>0))e.mark=6*this.scale('inscribe');
+            if(shot.third&&e.mark>0&&this.vow==='sword'){for(let i=0;i<2;i++)this.fire({x:p.x+(i?16:-16),y:p.y},e,8,'vow');this.say('剑印法门：三击有印 → 双剑齐发');}
             if(shot.third&&this.has('emberblade')){if(this.embers>0){this.embers--;amount*=2;if(!(p.paperForm>0))e.mark=6;}else amount*=1.15;}
             if(shot.third&&this.has('third'))this.impulse(e,before,380*this.scale('third'));
-          }this.damage(e,amount,shot.kind==='active'?'active':'sword');shot.hits=shot.hits||[];shot.hits.push(e.id);if(shot.pierce>0){if(shot.pierce===2)shot.damage*=.7;shot.pierce--;}else shot.life=0;}
+          }if(shot.kind==='follow'&&this.resonance('swordcycle'))e.mark=Math.max(e.mark,3);this.damage(e,amount,shot.kind==='active'?'active':'sword');shot.hits=shot.hits||[];shot.hits.push(e.id);if(shot.pierce>0){if(shot.pierce===2)shot.damage*=.7;shot.pierce--;}else shot.life=0;}
 
         }
         if(this.phase!=='combat')break;
@@ -394,6 +422,6 @@
       const game=new Campaign(d.seed);Object.assign(game,clone(d));if(save.version==='0.5.0'){game.mirror={x:560,y:460,r:18,vx:0,vy:0,drag:false};game.redLine=560;game.namePlate={owner:0,registered:true,moved:false};game.judgments=0;}game.rng=new RNG('');game.aiRng=new RNG('');game.rng.state=save.rng>>>0;game.aiRng.state=save.aiRng>>>0;game.sounds=[];game.effects=[];return game;
     }
   }
-  const api={Campaign,SKILLS,SKILL,CHAPTERS,EVIDENCE,STORIES,VERSION,dist,angleDelta,segmentRect};
+  const api={Campaign,SKILLS,SKILL,VOWS,RESONANCES,CHAPTERS,EVIDENCE,STORIES,VERSION,dist,angleDelta,segmentRect};
   if(typeof module!=='undefined')module.exports=api;else root.CelestialCampaign=api;
 })(typeof window!=='undefined'?window:globalThis);

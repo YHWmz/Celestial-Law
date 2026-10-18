@@ -6,3 +6,5 @@
 .test-controls{padding:14px 38px;color:#bba77c;font-size:11px}.test-controls button{margin-left:12px;font-size:11px}
 .stage canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}.stage{background:#0b171c}
 @media(max-width:800px){body[data-screen="combat"] .stage{min-height:0;aspect-ratio:1120/680}body[data-screen="combat"] .stage-caption{font-size:8px;padding:9px}body[data-screen="combat"] .hud{margin-bottom:7px}}
+
+.build-path{text-align:left;padding:12px;background:#233833;border:1px solid #8b825955;margin:10px 0;color:#ddc48d}.build-path p{font-size:11px;line-height:1.6;color:#b6c9bf}.resonance{padding:7px 0;border-top:1px solid #8b825933;font-size:11px;color:#9eafa5}.resonance small{display:block;margin-top:4px;font-size:10px;line-height:1.5}.resonance.ready{color:#f3d18b}.vow-effect{color:#e0c183!important}
